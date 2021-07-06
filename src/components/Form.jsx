@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
-const Form = () => {
+const Form = ({ createCita }) => {
   const [cita, setCita] = useState({
     pet: "",
     owner: "",
@@ -26,8 +27,6 @@ const Form = () => {
   //Cuando el usuario Haga submit al Form
   const submitCita = (e) => {
     e.preventDefault();
-
-    console.log(pet);
     //Validar
     if (
       pet.trim() === "" ||
@@ -39,12 +38,23 @@ const Form = () => {
       setError(true);
       return;
     }
+    //Limpiar el mensaje de error una ves superada la validacion
+    setError(false);
 
     //Asignar ID
+    cita.id = uuidv4();
 
     //Crear la cita
+    createCita(cita);
 
     //Reiniciar el Form
+    setCita({
+      pet: "",
+      owner: "",
+      dateDischarge: "",
+      time: "",
+      symptoms: "",
+    });
   };
 
   return (
