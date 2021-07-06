@@ -9,6 +9,9 @@ const Form = () => {
     symptoms: "",
   });
 
+  //State Para Manerar Errores
+  const [error, setError] = useState(false);
+
   //Funcion que se ejecutara al detectar cambios en los inputs
   const updateState = (e) => {
     setCita({
@@ -20,10 +23,37 @@ const Form = () => {
   //Destructuring al State:
   const { pet, owner, dateDischarge, time, symptoms } = cita;
 
+  //Cuando el usuario Haga submit al Form
+  const submitCita = (e) => {
+    e.preventDefault();
+
+    console.log(pet);
+    //Validar
+    if (
+      pet.trim() === "" ||
+      owner.trim() === "" ||
+      dateDischarge.trim() === "" ||
+      time.trim() === "" ||
+      symptoms.trim() === ""
+    ) {
+      setError(true);
+      return;
+    }
+
+    //Asignar ID
+
+    //Crear la cita
+
+    //Reiniciar el Form
+  };
+
   return (
     <>
       <h2>create an appointment </h2>
-      <form>
+
+      {error && <p className="alerta-error">All fields are required</p>}
+
+      <form onSubmit={submitCita}>
         <label>Pet Name</label>
         <input
           type="text"
