@@ -3,13 +3,24 @@ import Cita from "./components/Cita";
 import Form from "./components/Form";
 
 function App() {
+  //Citas en Localstorage
+  let initialCitas = JSON.parse(localStorage.getItem("citas"));
+
+  if (!initialCitas) {
+    initialCitas = [];
+  }
+
   //State para todas las citas
-  const [citas, setCitas] = useState([]);
+  const [citas, setCitas] = useState(initialCitas);
 
   //useEffect para realizar funciones solo cuando cambie el state
   useEffect(() => {
-    
-  }, [citas]);
+    if (initialCitas) {
+      localStorage.setItem("citas", JSON.stringify(citas));
+    } else {
+      localStorage.setItem("citas", JSON.stringify([]));
+    }
+  }, [citas, initialCitas]);
 
   //Funcion para guardar las citas actuales mas la nueva cita
   const createCita = (cita) => {
@@ -46,5 +57,9 @@ function App() {
     </>
   );
 }
+
+
+
+
 
 export default App;
